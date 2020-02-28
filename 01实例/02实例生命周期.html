@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        {{msg}}
+    </div>
+
+    <script>
+        var data = { msg: '哈哈!' }
+        var vm = new Vue({
+            el: "#app",
+            data: data,
+            created: function () {
+                // this指向vm实例
+                console.log('created---msg:' + this.msg)
+            },
+            beforeUpdate: function () {
+                console.log('beforeUpdate---msg:' + this.msg)
+            },
+            updated: function () {
+                console.log('updated---msg:' + this.msg)
+            }
+        });
+        setTimeout(() => {
+            vm.msg = '嘻嘻!'
+        }, 3000);
+    </script>
+</body>
+
+</html>
