@@ -13,7 +13,7 @@
         <span>{{message}}</span>
         <!-- 1. v-once指令能执行一次性的插值,数据改变时插值处不会更新 -->
         <span v-once>{{message}}</span>
-        <!-- 2. 原始HTML -->
+        <!-- 2. 原始HTML v-html指令需要加在标签上-->
         <p>使用 mustaches: {{rawHtml}}</p>
         <p v-html="rawHtml"></p>
         <!-- 3. v-bind绑定属性 -->
