@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <!-- 指令是带有 'v-' 前缀的attribute -->
+        <!-- 指令的职责是当表达式的值改变时,将值改变带来的影响响应的作用于DOM -->
+        <p v-if="seen">你能看到我吗?</p>
+        <!-- 1 参数 -->
+        <!-- v-bind 指绑定 -->
+        <a v-bind:href="url">点我跳转</a>
+        <!-- v-on 用于监听事件 -->
+        <a v-on:click="fn"></a>嗯嗯</a>
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                seen:true,
+                url: 'http://www.baidu.com',
+                fn: function(){
+                    alert('Hello!')
+                }
+            }
+        });
+        // vm.seen = false;
+    
+    </script>
+</body>
+</html>
