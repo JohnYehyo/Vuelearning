@@ -17,6 +17,22 @@
         <a v-bind:href="url">点我跳转</a>
         <!-- v-on 用于监听事件 -->
         <a v-on:click="fn"></a>嗯嗯</a>
+        <!-- 2 动态参数 -->
+        <!-- 动态参数表达式有一些语法约束，因为某些字符，如空格和引号，放在 HTML attribute 名里是无效的 -->
+        <!-- 另外大写字母会被转换为小写如attributeName转换为attributename -->
+        <div>
+            <a v-bind:[attributename]="url">继续点我跳转</a>
+            <a v-bind:[attributeName]="url">继续继续点我跳转</a>
+        </div>
+        <!-- 3 修饰符 -->
+        <!-- 以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定 -->
+        <!-- 加上.stop告诉click2执行完就停止 -->
+        <div @Click='click1'>
+            <div @Click.stop='click2'>
+                点我
+            </div>
+        </div>
+       
     </div>
     
     <script>
@@ -25,8 +41,17 @@
             data:{
                 seen:true,
                 url: 'http://www.baidu.com',
+                attributename: 'href'
+            },
+            methods:{
+                click1: function(){
+                    console.log('click1')
+                },
+                click2: function(){
+                    console.log('click2')
+                },
                 fn: function(){
-                    alert('Hello!')
+                    alert('你好!')
                 }
             }
         });
