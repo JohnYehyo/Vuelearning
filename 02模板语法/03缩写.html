@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app1">
+            <!-- v-bind缩写 -->
+            v-bind:
+            <a v-bind:href="url">完整语法</a>
+            <a :href="url">缩写</a>
+            <a :[key]="url">动态参数的缩写</a>
+        </div>
+
+        <div id="app2">
+            <!-- v-on的缩写 -->
+            v-on:
+            <a v-on:click="click">完整写法</a>
+            <a @click="click">缩写</a>
+            <a @[event]="click">动态参数的缩写</a>
+        </div>
+
+        <script>
+            var vm1 = new Vue({ el: '#app1', data: { url: 'https://www.v2ex.com', key: 'href' } });
+            var vm2 = new Vue({
+                el: '#app2',
+                data: {
+                    event: 'click',
+                },
+                methods: {
+                    click: function() {
+                        alert('点我了');
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
