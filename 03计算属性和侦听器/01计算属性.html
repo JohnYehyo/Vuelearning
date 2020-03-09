@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app1">
+            <!-- 模板内的表达式尽量避免冗长和复杂运算,下面这种就不应提倡 -->
+            <p :class="style">{{message.split('').reverse().join("")}}</p>
+            <!-- 取而代之可以使用计算属性来代替 -->
+            <p :[cls]="style">{{reversedMessage}}</p>
+            <!-- 使用方法也可以达成一样的效果,但是计算属性只在相关响应式依赖发生改变时才会重新加载
+                其余则使用缓存而使用方法的话每当触发重新渲染调用方法都会执行 -->
+            <p :[cls]="style2">{{reversedMessage2()}}</p>
+        </div>
+
+        <div id="app2">
+            {{fullName}}
+        </div>
+
+        <div id="app3">
+            {{fullWord}}
+        </div>
+
+        <script>
+            // 1 计算属性基础及计算属性缓存和方法的区别
+            var vm = new Vue({
+                el: '#app1',
+                data: {
+                    style: 'green',
+                    style2: 'yello',
+                    cls: 'class',
+                    message: 'immune',
+                },
+                computed: {
+                    // 计算属性的getter
+                    reversedMessage: function() {
+                        // this 指向vm实例
+                        return this.message
+                            .split('')
+                            .reverse()
+                            .join('');
+                    },
+                },
+                methods: {
+                    reversedMessage2: function() {
+                        return this.message
+                            .split('')
+                            .reverse()
+                            .join('');
+                    },
+                },
+            });
+
+            // 2 计算属性和侦听方法
+            // watch回调
+            // var vm2 = new Vue({
+            //     el: '#app2',
+            //     data: {
+            //         firstName: 'Foo',
+            //         lastName: 'lish',
+            //         fullName: 'Foolish',
+            //     },
+            //     watch: {
+            //         firstName: function(val) {
+            //             this.fullName = val + ' ' + this.lastName;
+            //         },
+            //         lastName: function(val) {
+            //             this.fullName = this.firstName + ' ' + value;
+            //         },
+            //     },
+            // });
+
+            // 使用计算属性
+            var vm2 = new Vue({
+                el: '#app2',
+                data: {
+                    firstName: 'Foo',
+                    lastName: 'lish',
+                },
+                computed: {
+                    fullName: function() {
+                        return this.firstName + this.lastName;
+                    },
+                },
+            });
+
+            // 3 计算属性的setter方法
+            var vm3 = new Vue({
+                el: '#app3',
+                data:{
+                    firstWord: 'pre',
+                    lastWord: 'vail'
+                },
+                computed:{
+                    fullWord:{
+                        get: function(){
+                            return this.firstWord + this.lastWord
+                        },
+                        set: function(newValue){
+                            var names = newValue.split(' ')
+                            this.firstWord = names[0]
+                            this.lastWord = names[names.length - 1]
+                        }
+                    }
+                }
+            })
+
+
+            setTimeout(function() {
+                vm.message = 'JohnYehyo';
+                vm3.fullWord = 'Kobe Bryant Wow'
+            }, 1000);
+        </script>
+        <style>
+            .green {
+                color: green;
+                font-size: 14px;
+            }
+            .yello {
+                color: yellow;
+                font-size: 14px;
+            }
+        </style>
+    </body>
+</html>
