@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- v-bind在用于class或sstyle时 可以是对象、数组切可以和普通class属性共存 -->
+
+        <!-- 1 对象语法 -->
+        <div id="app" class="static" v-bind:class="{active : isActive, 'text-danger': hasError}">
+            对象语法123
+        </div>
+        <div id="app1" v-bind:class="classObject">
+            对象语法456
+        </div>
+        <div id="app2" v-bind:class="classObject2">
+            对象语法789
+        </div>
+
+        <!-- 2 数组语法-->
+        <div id="app3" v-bind:class="[activeClass, errorClass]">
+            数组语法123
+        </div>
+        <!-- 三元表达式 -->
+        <div id="app4" v-bind:class="[isActive ? activeClass : '', errorClass]">
+            数组语法456
+        </div>
+        <!-- 嵌入对象语法代替三元丰富表现类型 -->
+        <div id="app5" v-bind:class="[{active:isActive}, errorClass]">
+            数组语法789
+        </div>
+
+        <script>
+            // 结果为:<div id="app" class="static active">
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    isActive: true,
+                    hasError: false,
+                },
+            });
+
+            // 以下写法等同于上面的效果,这样就不必把绑定的数据对象写在模板里
+            var vm1 = new Vue({
+                el: '#app1',
+                data: {
+                    classObject: {
+                        active: false,
+                        'text-danger': true,
+                    },
+                },
+            });
+
+            //结合上一节的计算属性,v-bind 也可以绑定一个 返回对象的 计算属性
+            var vm2 = new Vue({
+                el: '#app2',
+                data: {
+                    isActive: true,
+                    error: null,
+                },
+                computed: {
+                    classObject2: function() {
+                        return {
+                            active: this.isActive && !this.error,
+                            'text-danger': this.error && this.error.type === 'fatal',
+                        };
+                    },
+                },
+            });
+
+            // 结果为:<div id="app2" class="active text-danger">
+            var vm3 = new Vue({
+                el: '#app3',
+                data: {
+                    activeClass: 'active',
+                    errorClass: 'text-danger',
+                },
+            });
+
+            var vm4 = new Vue({
+                el: '#app4',
+                data: {
+                    isActive: false,
+                    activeClass: 'active',
+                    errorClass: 'text-danger',
+                },
+            });
+
+            var vm5 = new Vue({
+                el: '#app5',
+                data: {
+                    isActive: true,
+                    errorClass: 'text-danger',
+                },
+            });
+        </script>
+    </body>
+</html>
