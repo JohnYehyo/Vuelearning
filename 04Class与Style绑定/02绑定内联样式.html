@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- 1 对象语法 -->
+        <div id="app1" :style="{color: oneColor, fontSize: oneSize + 'px' }">看到我了吗</div>
+        <div id="app2" :style="oneStyle">看到我了吗</div>
+        <!-- 2 数组语法 -->
+        <div id="app3" :style="[style1, style2]">看到我了吗</div>
+        <!-- 3 自动添加前缀 -->
+        <!-- 4 多重置 绑定属性有多个值 常用于带多个前缀的值,所有值中只有最后一个被浏览器支持的值被渲染 -->
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">看到我了吗</div>
+
+        <script>
+            var vm1 = new Vue({
+                el: '#app1',
+                data: {
+                    oneColor: 'blue',
+                    oneSize: '14',
+                },
+            });
+
+            var vm2 = new Vue({
+                el: '#app2',
+                data: {
+                    // oneStyle : {color : 'red', fontSize: '15px'}
+                    //还可以使用计算属性返回对象的方法
+                    anotherColor: 'red',
+                    anotherSize: '36px'
+                },
+                computed: {
+                    oneStyle: function() {
+                        return { color: this.anotherColor, fontSize:this.anotherSize}
+                    }
+                }
+            });
+            var vm3 = new Vue({
+                el: '#app3',
+                data: {
+                    color1: 'yello',
+                    size1: '26px'
+                },
+                computed: {
+                    style1: function() {
+                        return { color: this.color1}
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
