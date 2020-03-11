@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <!-- 和v-if不同 v-show只是改变了css 标签实际还是被渲染了 -->
+        <!-- 所以v-if切换开销搞 v-show初始渲染开销高 -->
+        <!-- 如果运行后条件较少改变使用v-if 如果需要频繁切换条件用v-show -->
+        <!-- v-show不支持template标签 -->
+        <h1 v-show="isTrue">显示</h1>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                isTrue: false
+            }
+        })
+    </script>
+    
+</body>
+</html>
