@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- if/else-if/else -->
+            <h1 v-if="count > 5">大于5</h1>
+            <h1 v-else-if="count == 5">等于5</h1>
+            <h1 v-else>小于5</h1>
+
+            <!-- 使用模板控制多个元素(template标签不会显示) -->
+            <template v-if="isTrue">
+                <h1>say</h1>
+                <h1>Hello</h1>
+                <h1>!</h1>
+            </template>
+
+            <!-- 多个模板中有相同的元素时 vue会复用元素 if将不会控制此元素 -->
+            <template v-if="loginType === 'username'">
+                <label>用户名:</label>
+                <input placeholder="请输入用户名" />
+            </template>
+            <template v-else>
+                <label>邮箱:</label>
+                <input placeholder="请输入邮箱" />
+            </template>
+            <button @click="click1">切换登录方式</button>
+
+            <!-- 上面的方式也会有很多不适用的地方比如input中输入的内容没被替换掉 -->
+            <!-- 添加key属性使input也会因if-else被替换 -->
+            <template v-if="loginType === 'username'">
+                <label>用户名:</label>
+                <input placeholder="请输入用户名" key="usernameKey" />
+            </template>
+            <template v-else>
+                <label>邮箱:</label>
+                <input placeholder="请输入邮箱" key="emailKey"/>
+            </template>
+            <button @click="click1">切换登录方式</button>
+        </div>
+
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    count: 8,
+                    isTrue: true,
+                    loginType: 'username',
+                },
+                methods: {
+                    click1: function() {
+                        return (this.loginType =
+                            this.loginType === 'username' ? 'email' : 'username');
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
