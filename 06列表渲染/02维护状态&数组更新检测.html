@@ -24,7 +24,7 @@
             splice()
             sort()
             reverse() -->
-            <!-- 三秒后给数组新增值然后视图更新了 -->
+        <!-- 三秒后给数组新增值然后视图更新了 -->
         <ui id="uid">
             <li v-for="item in items">
                 {{item.message}}
@@ -70,47 +70,47 @@
                 el: '#uid',
                 data: {
                     items: [{ message: 'Jack' }, { message: 'Rose' }],
-                }
+                },
             });
-            setTimeout(()=>{
-                vm.items.push({message: 'shop'})
-            },3000)
+            setTimeout(() => {
+                vm.items.push({ message: 'shop' });
+            }, 3000);
 
             var vm1 = new Vue({
                 el: '#uid1',
                 data: {
                     items: [{ message: 'black' }, { message: 'white' }],
-                }
+                },
             });
-            setTimeout(()=>{
-                vm1.items= vm1.items.filter((item)=>{
-                    return item.message.match(/white/)
-                })
-            },3000)
+            setTimeout(() => {
+                vm1.items = vm1.items.filter(item => {
+                    return item.message.match(/white/);
+                });
+            }, 3000);
 
             var vm2 = new Vue({
                 el: '#uid2',
                 data: {
                     items: [{ message: 'ping' }, { message: 'pang' }],
-                }
+                },
             });
-            setTimeout(()=>{
+            setTimeout(() => {
                 // vm.items[1] = 'ball'
-                Vue.set(vm2.items, 1, {message: 'green'})
+                Vue.set(vm2.items, 1, { message: 'green' });
                 // vm2.$set(vm2.items, 1, { message: 'green' })
-            },3000)
+            }, 3000);
 
             var vm3 = new Vue({
                 el: '#uid3',
                 data: {
-                    Object: { name: '新冠', area: '湖北' }
-                }
+                    Object: { name: '新冠', area: '湖北' },
+                },
             });
-            setTimeout(()=>{
+            setTimeout(() => {
                 // vm.items[1] = 'ball'
                 // Vue.set(vm2.items, 1, {message: 'green'})
-                vm3.$set(vm3.Object, 'area', '武汉')
-            },3000)
+                vm3.$set(vm3.Object, 'area', '武汉');
+            }, 3000);
         </script>
     </body>
 </html>
