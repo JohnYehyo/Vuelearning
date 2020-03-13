@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- 1 数组 -->
+        <ui id="uid">
+            <!-- in或of都可以 -->
+            <li v-for="item in items">
+                <!-- <li v-for="item of items"> -->
+                {{item.message}}
+            </li>
+        </ui>
+
+        <ui id="uid1">
+            <li v-for="(item, index) in items">
+                {{index}}--{{item}}
+            </li>
+        </ui>
+
+        <!-- 2 对象 -->
+        <ui id="uid2">
+            <li v-for="value in object">
+                {{value}}
+            </li>
+        </ui>
+
+        <ui id="uid3">
+            <li v-for="(value, name, index) in object">
+               {{index}}--{{name}}--{{value}}
+            </li>
+        </ui>
+
+        <script>
+            var vm = new Vue({
+                el: '#uid',
+                data: {
+                    items: [{ message: 'Jack' }, { message: 'Rose' }],
+                },
+            });
+
+            var vm1 = new Vue({
+                el: '#uid1',
+                data: {
+                    items: [{ message: 'Jack' }, { message: 'Rose' }],
+                },
+            });
+
+            var vm2 = new Vue({
+                el: '#uid2',
+                data: {
+                    object: { name: 'Jack', gender: 'male' },
+                },
+            });
+
+            var vm3 = new Vue({
+                el: '#uid3',
+                data: {
+                    object: { name: 'Rose', gender: 'female' },
+                },
+            });
+        </script>
+    </body>
+</html>
