@@ -7,16 +7,73 @@
         <title>Document</title>
     </head>
     <body>
+        <!-- 1 v-model 双向数据绑定 -->
         <div id="example1">
-            <input v-model="message" placeholder="请输入...">
-            <p>输入的信息是: {{ message }}</p>
+            <!-- 文本 -->
+            <div>
+                <input v-model="message" placeholder="请输入..." />
+                <p>输入的信息是: {{ message }}</p>
+            </div>
+
+            <!-- 多行文本 -->
+            <div>
+                <span>多行文本信息是:</span>
+                <p style="white-space: pre-line;">{{ message2 }}</p>
+                <textarea v-model="message2" placeholder="请输入..."></textarea>
+            </div>
+
+            <!-- 复选框 -->
+            <div>
+                <span>复选框:</span>
+                <input type="checkbox" id="checkbox" v-model="checked" />
+                <label for="checkbox">{{ checked }}</label>
+            </div>
+
+            <!-- 多个复选框绑定同一数组 -->
+            <div>
+                <span>多个复选框</span>
+                <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+                <label for="jack">Jack</label>
+                <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+                <label for="john">John</label>
+                <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+                <label for="mike">Mike</label>
+                <br />
+                <span>选中结果为: {{ checkedNames }}</span>
+            </div>
+
+            <!-- 单选按钮 -->
+            <div>
+                <span>单选按钮:</span>
+                <br />
+                <input type="radio" id="one" value="One" v-model="picked" />
+                <label for="one">One</label>
+                <input type="radio" id="two" value="Two" v-model="picked" />
+                <label for="two">Two</label>
+                <br />
+                <span>选中了: {{ picked }}</span>
+            </div>
+
+            <!-- 选择下拉框 -->
+            <select v-model="selected">
+                <option disabled value="">请选择</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+              <span>选择了: {{ selected }}</span>
         </div>
 
         <script type="text/javascript">
             var vm = new Vue({
                 el: '#example1',
                 data: {
-                    message: ''
+                    message: '',
+                    message2: '',
+                    checked: false,
+                    checkedNames: [],
+                    picked: '',
+                    selected: ''
                 }
             });
         </script>
