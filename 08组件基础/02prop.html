@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <blog-post title="first"></blog-post>
+            <blog-post title="second"></blog-post>
+            <blog-post title="third"></blog-post>
+
+            <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:title="post.title"
+            ></blog-post>
+        </div>
+
+        <script type="text/javascript">
+            // 通过prop向子组件传递数据
+            Vue.component('blog-post', {
+                props: ['title'],
+                template: '<h1>{{title}}</h1>',
+            });
+
+            new Vue({
+                el: '#app',
+                data:{
+                    posts:[
+                        {id:1, title:'第一个'},
+                        {id:2, title:'第二个'},
+                        {id:3, title:'第三个'}
+                    ]
+                }
+            });
+        </script>
+    </body>
+</html>
