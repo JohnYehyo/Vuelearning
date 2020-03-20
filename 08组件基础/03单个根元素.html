@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+
+        <!-- 1 每个组件必须只有一个根元素 -->
+        <h3>{{ title }}</h3>
+        <div v-html="content"></div>
+        <!-- 可以将模板的内容包裹在一个父元素内 -->
+        <div class="blog-post">
+            <h3>{{ title }}</h3>
+            <div v-html="content"></div>
+          </div>
+
+
+          <!-- 2 复杂组建的重构 -->
+        <!-- <div id="app">
+            <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:title="post.title"
+                v-bind:content="post.content"
+                v-bind:publishedAt="post.publishedAt"
+                v-bind:comments="post.comments"
+            ></blog-post> -->
+
+            <!-- 以上组件复杂的情况可以重构单个组件 -->
+            <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post">123</blog-post>
+        </div>
+
+        <script type="text/javascript">
+            Vue.component('blog-post', {
+                props: ['post'],
+                template: 
+                    '<div class="blog-post">'+
+                        '<h3>{{ post.title }}</h3>'+
+                        '<div v-html="post.content"></div>'+
+                        '</div>'
+                })
+        </script>
+    </body>
+</html>
