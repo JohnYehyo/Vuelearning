@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        
+        <div id= 'app'>
+            <hello-components1></hello-components1>
+            <hello-components2></hello-components2>
+            <!-- 这里会报错, 局部组件只能用于注册它的父组件中(这里既是app中) -->
+            <global-component></global-component>
+        </div>
+
+        <script type="text/javascript">
+
+            var components1 = {
+                data: function(){
+                    return {
+                        msg: '第一个局部组件'    
+                    }
+                },
+                template: `
+                    <div>{{msg}}</div> 
+                `
+            }
+
+            var components2 = {
+                data: function(){
+                    return {
+                        msg: '第二个局部组件'    
+                    }
+                },
+                template: `
+                    <div>{{msg}}</div> 
+                `
+            }
+
+            Vue.component('global-component',{
+                data: function(){
+                    return {
+                        msg: '全局组件'    
+                    }
+                },
+                template: `
+                    <div>{{msg}}<hello-components1></hello-components1></div> 
+                `
+            })
+
+            new Vue({
+                el: '#app',
+                components:{
+                    'hello-components1': components1,
+                    'hello-components2': components2
+                }
+            });
+        </script>
+    </body>
+</html>
