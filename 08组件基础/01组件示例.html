@@ -14,6 +14,14 @@
             <button-counter></button-counter>
 
             <check-counter></check-counter>
+
+            <!-- 组件的命名规则 -->
+            <!-- 小写单词间用-链接 或者使用驼峰命名 -->
+            <!-- 驼峰命名时不可以直接使用这个组件会报未知组件需要将其转化为小写单词用-链接的形式, 见:<HelloWorld>与<hello-world>-->
+            <!-- 但是在模板中可以使用驼峰命名,见: <hello-test> -->
+            <HelloWorld></HelloWorld>
+            <hello-world></hello-world>
+            <hello-test></hello-test>
         </div>
 
         <!-- 定义组件 -->
@@ -33,11 +41,32 @@
                     };
                 },
                 template:
-                    '<select v-model="selected"><option disabled value="">请选择</option><option>A</option><option>B</option><option>C</option></select>'
+                    '<select v-model="selected"><option disabled value="">请选择</option><option>A</option><option>B</option><option>C</option></select>',
+            });
+            Vue.component('HelloWorld', {
+                data: function() {
+                    return {
+                        message: '点击我',
+                    };
+                },
+                template: '<button>{{message}}</button>',
+            });
+            Vue.component('hello-test', {
+                data: function() {
+                    return {
+                        msg: '看到我了吗2',
+                    };
+                },
+                template: `
+                    <div>
+                        <div>{{msg}}</div>
+                        <HelloWorld></HelloWorld>
+                    </div>
+                    `,
             });
 
             var vm = new Vue({
-                el: '#components-demo'
+                el: '#components-demo',
             });
         </script>
     </body>
