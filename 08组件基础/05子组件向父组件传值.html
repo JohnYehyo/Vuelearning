@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 这种子组件向父组件传值的方向不提倡, 因为props传值约定是单向的数据流避免数据混乱难以维护 -->
+            <!-- tips: 注意驼峰命名是附件见还是需要用小写的单词 '-' 链接的形式 -->
+            <one-child :one-array="oneArray"></one-child>
+            <!-- 这个是推荐的子组件向父组件传值 使用自定义事件来传递信息 -->
+            <self v-on:self-fun="zoom"></self>
+            <span :style='{fontSize: fontSize + "px"}'>{{tool}}</span>
+        </div>
+
+        <script type="text/javascript">
+            Vue.component('one-child', {
+                props: ['oneArray'],
+                template: `
+                <div>
+                    <ul>
+                        <li :key='index' v-for='(item,index) in oneArray'>{{item}}</li>
+                    </ul>
+                    <button @click='oneArray.push("three")'>点击我看看</button>
+                </div>
+            `,
+            });
+
+            Vue.component('self', {
+                props: ['oneArray'],
+                template: `
+                <div>
+                    <ul>
+                        <li :key='index' v-for='(item,index) in oneArray'>{{item}}</li>
+                    </ul>
+                    <button v-on:click='$emit("self-fun")'>会产生一些效果</button>
+                </div>
+            `,
+            });
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    oneArray: ['first', 'second'],
+                    fontSize: 14,
+                    tool: '为了展示自定义事件传递消息的工具人'
+                },
+                methods: {
+                    zoom: function(){
+                        this.fontSize += 6;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
