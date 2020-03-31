@@ -6,35 +6,47 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <title>Document</title>
     </head>
+    <script type="text/css">
+        .color{
+            color: yello
+        }
+    </script>
     <body>
         <div id="app">
+            <!-- 1 组件插槽 -->
             <chacao>这里是一条警告</chacao>
             <chacao>这里是两条警告</chacao>
             <!-- 没有传文本时将显示默认值 -->
             <chacao></chacao>
 
-            <!-- 具名插槽(有名字可匹配) -->
+            <!-- 2 具名插槽(有名字可匹配) -->
             <juming-chacao>
-                <p slot='header'>标题信息</p>
-                <p slot='header'>标题信息1</p>
+                <p slot="header">标题信息</p>
+                <p slot="header">标题信息1</p>
                 <p>主要内容1</p>
                 <p>主要内容2</p>
-                <p slot='footer'>底部信息</p>
+                <p slot="footer">底部信息</p>
             </juming-chacao>
 
             <juming-chacao>
-                <template slot='header'>
+                <template slot="header">
                     <p>标题信息11</p>
                     <p>标题信息22</p>
                 </template>
                 <p>主要内容11</p>
                 <p>主要内容22</p>
-                <template slot='footer'>
+                <template slot="footer">
                     <p>底部信息11</p>
                     <p>底部信息22</p>
                 </template>
             </juming-chacao>
 
+            <!-- 3 作用于插槽 -->
+            <zuoyongyu-chacao :list=list>
+                <template slot-scope="slotProps">
+                    {{slotProps.info.name}}
+                </template>
+            </zuoyongyu-chacao>
         </div>
 
         <script type="text/javascript">
@@ -64,8 +76,28 @@
                `,
             });
 
+            Vue.component('zuoyongyu-chacao', {
+                props: ['list'],
+                template: `
+               <div>
+                    <li :key='item.id' v-for = 'item in list'>
+                        <slot v-bind:suibian="item">
+                            {{item.name}}
+                        </slot>
+                    </li>
+                </div>
+               `,
+            });
+
             var vm = new Vue({
                 el: '#app',
+                data:{
+                    list:[
+                        {id: 1, name: 'green'},
+                        {id: 2, name: 'yello'},
+                        {id: 3, name: 'red'}
+                    ]
+                }
             });
         </script>
     </body>
