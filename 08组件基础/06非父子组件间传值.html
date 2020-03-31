@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <event-first></event-first>
+            <event-second></event-second>
+            <button @click="destroy">销毁所有事件</button>
+        </div>
+
+        <script type="text/javascript">
+            //定义事件中心
+            var eventHub = new Vue();
+
+            Vue.component('event-first', {
+                data: function() {
+                    return {
+                        num: 0,
+                    };
+                },
+                template: `
+                    <div>
+                        <div>组件一当前值为:{{num}}</div>
+                        <button @click='fun'>点击改变组件二的值</button>
+                    </div>
+                `,
+                methods: {
+                    fun: function() {
+                        //点击方法触发改变组件二值的事件
+                        eventHub.$emit('event-second', 1);
+                    },
+                },
+                mounted: function() {
+                    //监听改变自己值的事件,并处理
+                    eventHub.$on('event-first', val => {
+                        this.num += val;
+                    });
+                },
+            });
+
+            Vue.component('event-second', {
+                data: function() {
+                    return {
+                        num: 0,
+                    };
+                },
+                template: `
+                    <div>
+                        <div>组件二当前值为:{{num}}</div>
+                        <button @click='fun'>点击改变组件一的值</button>
+                    </div>
+                `,
+                methods: {
+                    fun: function() {
+                        //点击方法触发改变组件一值的时间
+                        eventHub.$emit('event-first', 2);
+                    },
+                },
+                mounted: function() {
+                    //监听改变自身值的时间
+                    eventHub.$on('event-second', val => {
+                        this.num += val;
+                    });
+                },
+            });
+
+            var vm = new Vue({
+                el: '#app',
+                methods: {
+                    destroy: function() {
+                        eventHub.$off('event-first');
+                        eventHub.$off('event-second');
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
