@@ -1,32 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <title>Document</title>
-</head>
-<body>
-    <div id="app">
-        <chacao>这里是一条警告</chacao>
-        <chacao>这里是两条警告</chacao>
-        <chacao></chacao>
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <chacao>这里是一条警告</chacao>
+            <chacao>这里是两条警告</chacao>
+            <!-- 没有传文本时将显示默认值 -->
+            <chacao></chacao>
 
-    <script type="text/javascript">
+            <!-- 具名插槽(有名字可匹配) -->
+            <juming-chacao>
+                <p slot='header'>标题信息</p>
+                <p slot='header'>标题信息1</p>
+                <p>主要内容1</p>
+                <p>主要内容2</p>
+                <p slot='footer'>底部信息</p>
+            </juming-chacao>
 
-        Vue.component('chacao',{
-               template:`
+            <juming-chacao>
+                <template slot='header'>
+                    <p>标题信息11</p>
+                    <p>标题信息22</p>
+                </template>
+                <p>主要内容11</p>
+                <p>主要内容22</p>
+                <template slot='footer'>
+                    <p>底部信息11</p>
+                    <p>底部信息22</p>
+                </template>
+            </juming-chacao>
+
+        </div>
+
+        <script type="text/javascript">
+            //组件插槽在组件中默认为slot标签
+            Vue.component('chacao', {
+                template: `
                <div>
                     <strong>WARN:</strong>
                     <slot>默认内容(父组件不传文本时显示)</slot>
                 </div>
-               ` 
-        })
-    
-        var vm = new Vue({
-            el: '#app'
-        })
-    </script>
-</body>
+               `,
+            });
+
+            Vue.component('juming-chacao', {
+                template: `
+               <div>
+                    <header>
+                        <slot name='header'></slot>
+                    </header>
+                    <main>
+                        <slot></slot>
+                    </main>
+                    <footer>
+                        <slot name='footer'></slot>
+                    </footer>
+                </div>
+               `,
+            });
+
+            var vm = new Vue({
+                el: '#app',
+            });
+        </script>
+    </body>
 </html>
