@@ -7,6 +7,7 @@
     </head>
     <body>
         <script type="text/javascript">
+            // 一 实例方法
             // 1. 简单例子
             // var p = new Promise(function(resolve, reject) {
             //     // resolve('成功!');
@@ -103,35 +104,35 @@
 
             var url1 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=116.310003,39.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
             var url2 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=117.310003,38.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
-            getPosition(url1).then(
-                data =>{
-                    console.log(data);
-                    return getPosition(url2);
-                },
-                error=>{
-                    console.log(error);
-                    throw Error(error)
-                }
-            )
-            //这里实际是返回的新Promise对象调用的then
-            .then(
-                data =>{
-                    console.log(data);
-                    getPosition(url2);
-                    return "123";
-                }
-            )
-            .catch(
-                e=>{
-                    console.log('捕获2:' + e)
-                }
-            )
-            //这里实际是产生的默认的Promise对象调用的then保证链式操作不中断
-            .then(
-                data => {
-                    console.log(data)
-                }
-            )
+            // getPosition(url1).then(
+            //     data =>{
+            //         console.log(data);
+            //         return getPosition(url2);
+            //     },
+            //     error=>{
+            //         console.log(error);
+            //         throw Error(error)
+            //     }
+            // )
+            // //这里实际是返回的新Promise对象调用的then
+            // .then(
+            //     data =>{
+            //         console.log(data);
+            //         getPosition(url2);
+            //         return "123";
+            //     }
+            // )
+            // .catch(
+            //     e=>{
+            //         console.log('捕获2:' + e)
+            //     }
+            // )
+            // //这里实际是产生的默认的Promise对象调用的then保证链式操作不中断
+            // .then(
+            //     data => {
+            //         console.log(data)
+            //     }
+            // )
 
             /*
             
@@ -143,6 +144,25 @@
                 2. 返回普通纸
                 则返回的值会传递给下一个then,通过then参数中函数的参数接收该值
             */
+
+
+            // 二 对象方法
+
+            var p1 =  getPosition(url1);
+            var p2 =  getPosition(url2);
+            //1. promise().all 并发处理多个异步任务,所有任务都执行完才得到结果
+            // Promise.all([p1,p2]).then(
+            //     (result)=>{
+            //         console.log(result)
+            //     }
+            // );
+
+            //2. promise().race 并发处理多个异步任务,只要有一个执行完就得到结果
+            Promise.race([p1,p2]).then(
+                (result)=>{
+                    console.log(result)
+                }
+            );
         </script>
     </body>
 </html>
