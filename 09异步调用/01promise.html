@@ -118,10 +118,12 @@
                     console.log('捕获1:' + e)
                 }
             )
+            //这里实际是返回的新Promise对象调用的then
             .then(
                 data =>{
                     console.log(data);
                     getPosition(url2);
+                    return "123";
                 }
             )
             .catch(
@@ -129,6 +131,23 @@
                     console.log('捕获2:' + e)
                 }
             )
+            //这里实际是产生的默认的Promise对象调用的then保证链式操作不中断
+            .then(
+                data => {
+                    console.log(data)
+                }
+            )
+
+            /*
+            
+            注意点:
+                参照上例
+                如果then参数中的函数返回值
+                1. 返回Promise对象,
+                则返回的对象会调用下一个then
+                2. 返回普通纸
+                则返回的值会传递给下一个then,通过then参数中函数的参数接收该值
+            */
         </script>
     </body>
 </html>
