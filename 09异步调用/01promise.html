@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // 1. 简单例子
+            // var p = new Promise(function(resolve, reject) {
+            //     // resolve('成功!');
+            //     reject('失败!');
+            // });
+
+            // p.then(
+            //     data => {
+            //         console.log('resolve回调结果:'+data)
+            //     },
+            //     (data) => {
+            //         console.log('reject回调结果:'+data)
+            //     }
+            // );
+
+            //2. then成功后(不抛异常或返回promise)都会继续执行下一个then成功的回调
+            // var p = new Promise(function(resolve, reject) {
+            //     // resolve('成功!');
+            //     reject('失败!');
+            // });
+
+            // p.then(
+            //     data => {
+            //         console.log('resolve回调结果:'+data)
+            //     },
+            //     (data) => {
+            //         console.log('reject回调结果:'+data)
+            //     }
+            // )
+            // .then(
+            //     data=>{
+            //         console.log('resolve回调结果1:'+data)
+            //     },
+            //     error=>{
+            //         console.log('reject回调结果1:'+error)
+            //     }
+
+            // );
+
+            //3. catch
+            // var p = new Promise(function(resolve, reject) {
+            //     resolve('成功!');
+            //     // reject('失败!');
+            // });
+
+            // p.then(
+            //     data => {
+            //         console.log('resolve回调结果:'+data)
+            //         throw Error('错误!')
+            //     },
+            //     (data) => {
+            //         console.log('reject回调结果:'+data)
+            //     }
+            // )
+            // .then(
+            //     data=>{
+            //         console.log('resolve回调结果1:'+data)
+            //     },
+            //     error=>{
+            //         console.log('reject回调结果1:'+error)
+            //         throw Error('错误自己抛出的')
+            //     }
+
+            // )
+            // .then(
+            //     data=>{
+            //         console.log('resolve回调结果2:'+data)
+            //     }
+            // )
+            // .catch(e=>{
+            //     console.log('catch的异常:'+e)
+            // }
+
+            // )
+
+            //4. 练习按顺序的多次发送Ajax请求
+            function getPosition(url){
+                return new Promise(function(resolve, reject){
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState != 4){
+                            return;
+                        }
+                        if(xhr.readyState == 4 && xhr.status == 200){
+                            resolve(xhr.responseText);
+                        }else{
+                            reject('请求异常')
+                        }
+                    }
+                    xhr.open('get', url);
+                    xhr.send(null)
+                });
+            }
+
+            var url1 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=116.310003,39.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
+            var url2 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=117.310003,38.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
+            getPosition(url1).then(
+                data =>{
+                    console.log(data);
+                    return getPosition(url2);
+                },
+                error=>{
+                    console.log(error);
+                    throw Error(error)
+                }
+            )
+            .catch(
+                e=>{
+                    console.log('捕获1:' + e)
+                }
+            )
+            .then(
+                data =>{
+                    console.log(data);
+                    getPosition(url2);
+                }
+            )
+            .catch(
+                e=>{
+                    console.log('捕获2:' + e)
+                }
+            )
+        </script>
+    </body>
+</html>
