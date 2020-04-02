@@ -102,6 +102,15 @@
                 });
             }
 
+            /*
+            注意点:
+                参照下面例子
+                如果then参数中的函数返回值
+                1. 返回Promise对象,
+                则返回的对象会调用下一个then
+                2. 返回普通纸
+                则返回的值会传递给下一个then,通过then参数中函数的参数接收该值
+            */
             var url1 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=116.310003,39.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
             var url2 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=117.310003,38.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
             // getPosition(url1).then(
@@ -133,17 +142,6 @@
             //         console.log(data)
             //     }
             // )
-
-            /*
-            
-            注意点:
-                参照上例
-                如果then参数中的函数返回值
-                1. 返回Promise对象,
-                则返回的对象会调用下一个then
-                2. 返回普通纸
-                则返回的值会传递给下一个then,通过then参数中函数的参数接收该值
-            */
 
 
             // 二 对象方法
