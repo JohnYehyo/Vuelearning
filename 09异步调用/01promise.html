@@ -113,11 +113,6 @@
                     throw Error(error)
                 }
             )
-            .catch(
-                e=>{
-                    console.log('捕获1:' + e)
-                }
-            )
             //这里实际是返回的新Promise对象调用的then
             .then(
                 data =>{
