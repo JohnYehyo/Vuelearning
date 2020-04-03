@@ -50,7 +50,8 @@
         //json类型提交
         fetch('url',{
             method: 'put',
-            body: JSON.stringify({username: 'JohnYehyo', password: '123456'})
+            body: JSON.stringify({username: 'JohnYehyo', password: '123456'}),
+            headers: {'Content-Type': 'application/json'}
         }).then(data=>{
             return data.json();
         }).then(data=>{
