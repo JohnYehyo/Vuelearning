@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script type="text/javascript">
+
+        // 1. fetch的基本用法
+        // 返回文本
+        fetch('url').then(data=>{
+            //返回的是一个Promise对象所以需要再用一个then接收数据
+            return data.text();
+        }).then(data=>{
+            console.log(data)
+        }).catch(data=>{
+            console.error('错误:'+data)
+        })
+
+        // 返回json数据
+        fetch('url').then(data=>{
+            //返回的是一个Promise对象所以需要再用一个then接收数据
+            return data.json();
+        }).then(data=>{
+            var obj = JSON.parse(data);
+            console.log(obj.username);
+            console.log(obj.password);
+        }).catch(data=>{
+            console.error('错误:'+data)
+        })
+
+
+        // 2. post put delete 请求
+        // 表单提交类型传递
+        fetch('url',{
+            method: 'post', // put delete
+            body: 'param1=a&param2=b',
+            headers: {'Content-Type': 'application/x-www-form-urlencode'} //'Content-Type': 'multipart/form-data'        
+        }).then(data=>{
+            return data.text();
+        }).then(data=>{
+            console.log(data)
+        }).catch(data=>{
+            console.error('错误:'+data)
+        })
+
+        //json类型提交
+        fetch('url',{
+            method: 'put',
+            body: JSON.stringify({username: 'JohnYehyo', password: '123456'})
+        }).then(data=>{
+            return data.json();
+        }).then(data=>{
+            var obj = JSON.parse(data);
+            console.log(data.username);
+            console.log(data.password);
+        }).catch(data=>{
+            console.error('错误:'+ data)
+        })
+
+        var url1 = 'https://restapi.amap.com/v3/geocode/regeo?output=xml&location=116.310003,39.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
+        // 3. 实例
+        fetch(url1).then(data=>{
+            //返回的是一个Promise对象所以需要再用一个then接收数据
+            return data.text();
+        }).then(data=>{
+            console.log(data)
+        }).catch(data=>{
+            console.error('错误:' + data)
+        })
+    </script>
+</body>
+</html>
