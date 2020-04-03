@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <script type="text/javascript">
+
+        //axios全局配置
+        //默认URL
+        axios.defaults.baseURL='https://restapi.amap.com/';
+        //超时时间
+        // axios.defaults.timeout=3000;
+        //请求头配置
+        // axios.defaults.headers['YehToken']='balabala';
+        
+
+        //axios 请求拦截器
+        axios.interceptors.request.use(config=>{
+            console.log('请求拦截:')
+            console.log(config)
+            console.log('url:'+config.url);
+            //也可以在这里配置请求参数 比全局配置要灵活
+            config.timeout=3000;
+            // config.headers['YehToken']='balabala';
+            //一定要return
+            return config;
+        }, err=>{
+            console.error('请求错误信息:'+err)
+        });
+
+        //axios 响应拦截器
+        axios.interceptors.response.use(result=>{
+            console.log('响应拦截:');
+            console.log(result);
+            if(result.status == 200){
+                console.log('成功响应')
+            }else{
+                console.log('失败响应:'+result.status);  
+            }
+            //这里也可以直接返回实际数据 之后的axios就不用处理了
+            // return result.data;
+            return result;
+        }, err=>{
+            console.error('响应错误信息:'+err)
+        });
+
+        // axios
+        // 1. 基本用法
+        var url1 = 'v3/geocode/regeo?output=json&location=116.310003,39.991957&key=2e21d8437588248262fa2509f080502d&radius=1000&extensions=all';
+        var url2 = 'v3/geocode/regeo';
+        axios.get(url1).then(data=>{
+            console.log(data);
+            var obj = data.data;
+            console.log(obj);
+            console.log(obj.status);
+            console.log(obj.info);
+        })
+        
+        // json类型参数 ContentType: application/json
+        axios.get(url2, {
+            params:{
+                output: 'json',
+                location: '116.310003,39.991957',
+                key: '2e21d8437588248262fa2509f080502d',
+                radius: '1000',
+                extensions: 'all'
+            }
+        }).then(data=>{
+            var obj = data.data;
+            console.log(obj.status);
+            console.log(obj.info);
+        })
+
+        // 表单类型参数(get不能用) Content-Type: applicaiton/x-www-form-urlencoded
+        const params = new URLSearchParams();
+        params.append('output', 'json');
+        params.append('location', '116.310003,39.991957');
+        params.append('key', '2e21d8437588248262fa2509f080502d');
+        params.append('radius', '1000');
+        params.append('extensions', 'all');
+        axios.post(url2, params).then(data=>{
+            var obj = data.data;
+            console.log(obj.status);
+            console.log(obj.info);
+        })
+
+    </script>
+</body>
+</html>
