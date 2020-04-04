@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <a href="#/baseHtml">主页</a>
+        <a href="#/administrator">管理模块</a>
+        <a href="#/business">业务模块</a>
+
+        <component :is="componentName"></component>
+    </div>
+    
+
+    <script type="text/javascript">
+
+        //定义所需组件
+        const baseHtml = {
+            template: '<h1>主页内容</h1>'
+        }
+        const administrator = {
+            template: '<h1>管理模块内容</h1>'
+        }
+        const business = {
+            template: '<h1>业务模块内容</h1>'
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                componentName: 'baseHtml'
+            },
+            components: {
+                baseHtml,
+                administrator,
+                business
+            }
+        })
+
+        window.onhashchange = function(){
+            console.log(location.hash.slice(2))
+            vm.componentName = location.hash.slice(2)
+        }
+    </script>
+</body>
+</html>
