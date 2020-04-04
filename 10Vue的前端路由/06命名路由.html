@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <!-- 1 路由链接 -->
+        <router-link :to="{name: 'baseHtml'}">主页</router-link>
+        <router-link :to="{name: 'user'}">用户</router-link>
+        <router-link :to="{name: 'business'}">业务</router-link>
+
+        <!-- 2 路由填充位(路由占位符) -->
+        <router-view></router-view>
+    </div>
+    
+
+    <script type="text/javascript">
+        
+        // 3 定义路由组件
+        var baseHtml = {
+            template: '<h1>主页</h1>'
+        }
+
+        var user = {
+            name: 'user',
+            template: '<h1>用户</h1>'
+        }
+        
+        var business = {
+            name: 'business',
+            template: `
+                <div>
+                    <h1>业务</h1>
+                    </hr>
+                    <router-link :to="{name: 'businessChild', params:{bid: 3}}">业务1</router-link>
+                    <router-link :to="{name: 'businessChild', params:{bid: 6}}">业务2</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+        }
+
+        // 定义末班中的子路由
+        var businessChild = {
+            props: ['id', 'businessName'],
+            template: '<h2>子业务--id:{{id}}--名称:{{businessName}}</h2>'
+        }
+    
+        // 4 配置路由规则并创建路由实例
+        var router = new VueRouter({
+            // 路由规则数组
+            routes: [
+                // 每个路由规则都是一个配置对象
+                // path表示当前路由规则匹配的hash地址(上面路由链接中配置的地址)
+                // component表示当前路由规则对应要展示的组件
+                {path: '/', redirect: '/baseHtml'},
+                {path: '/baseHtml', component: baseHtml, name: 'baseHtml'},
+                {path: '/user', component: user, name: 'user'},
+                {path: '/business', component: business, name: 'business', children:[
+                    {path: '/businessChild/:bid', component: businessChild, name: 'businessChild', props: route => ({
+                        businessName: '取证',
+                        id: route.params.bid
+                        })}
+                ]}
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            // 5 将路由规则挂载到Vue实例对象上
+            router: router
+        })
+    </script>
+</body>
+</html>
