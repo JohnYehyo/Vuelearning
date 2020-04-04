@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            axios.defaults.baseURL='https://restapi.amap.com/';
+
+            var url1 = 'v3/geocode/regeo';
+            var url2 = 'v3/geocode/geo';
+
+            var param1 = {
+                output: 'json',
+                location: '116.310003,39.991957',
+                key: '2e21d8437588248262fa2509f080502d',
+                radius: '1000',
+                extensions: 'all',
+            };
+
+            var param2 = {
+                output: 'json',
+                address: '',
+                key: '2e21d8437588248262fa2509f080502d'
+            };
+
+
+            //1 基本用法
+            async function getData(url, param) {
+                //获得的是一个Promise对象 调用者要用then接收数据
+                const ret = await axios.get(url, {params: param})
+                return ret;
+            }
+
+            getData(url1, param1).then(data=>{
+                console.log(data.data)
+                console.log(data.data.regeocode.formatted_address)
+            });
+
+            //2 解决普通ajax连续顺序调用复杂代码不美观的问题
+            async function getValue(url, url2, param, param2){
+                var ret = await axios.get(url, {params: param});
+                param2.address = ret.data.regeocode.formatted_address;
+                var data = await axios.get(url2, {params: param2});
+                return data;
+            }
+            
+            getValue(url1, url2, param1, param2).then(data=>{
+                console.log(data.data)
+            })
+        </script>
+    </body>
+</html>
