@@ -8,10 +8,12 @@
 </head>
 <body>
     <div id="app">
+        <!-- hash路由链接 -->
         <a href="#/baseHtml">主页</a>
         <a href="#/administrator">管理模块</a>
         <a href="#/business">业务模块</a>
 
+        <!-- 组件展位 -->
         <component :is="componentName"></component>
     </div>
     
@@ -41,6 +43,7 @@
             }
         })
 
+        // 监听hash改变随之改变路由
         window.onhashchange = function(){
             console.log(location.hash.slice(2))
             vm.componentName = location.hash.slice(2)
