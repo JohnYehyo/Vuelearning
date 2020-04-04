@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <!-- 1 路由链接 -->
+        <router-link to="/baseHtml">主页</router-link>
+        <router-link to="/user">用户</router-link>
+        <router-link to="/business">业务</router-link>
+
+        <!-- 2 路由填充位(路由占位符) -->
+        <router-view></router-view>
+    </div>
+    
+
+    <script type="text/javascript">
+        
+        // 3 定义路由组件
+        var baseHtml = {
+            template: '<h1>主页</h1>'
+        }
+
+        var user = {
+            template: '<h1>用户</h1>'
+        }
+        
+        var business = {
+            template: `
+                <div>
+                    <h1>业务</h1>
+                    </hr>
+                    <router-link to="/business1">业务1</router-link>
+                    <router-link to="/business2">业务2</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+        }
+
+        // 定义末班中的子路由
+        var business1 = {
+            template: '<h2>业务1</h2>'
+        }
+
+        var business2 = {
+            template: '<h2>业务2</h2>'
+        }
+    
+        // 4 配置路由规则并创建路由实例
+        var router = new VueRouter({
+            // 路由规则数组
+            routes: [
+                // 每个路由规则都是一个配置对象
+                // path表示当前路由规则匹配的hash地址(上面路由链接中配置的地址)
+                // component表示当前路由规则对应要展示的组件
+                {path: '/', redirect: '/baseHtml'},
+                {path: '/baseHtml', component: baseHtml},
+                {path: '/user', component: user},
+                // 配置子对象的路由规则
+                {path: '/business', component: business, children:[
+                    {path: '/business1', component: business1},
+                    {path: '/business2', component: business2}
+                ]}
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            // 5 将路由规则挂载到Vue实例对象上
+            router: router
+        })
+    </script>
+</body>
+</html>
