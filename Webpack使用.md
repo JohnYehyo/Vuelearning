@@ -87,3 +87,11 @@ module.exports = {
     plugins: [htmlPlugin]
 }
 ```
+## 7. 配置自动打包
+在package.json中增加以下配置
+```
+  "scripts": {
+    "dev": "webpack-dev-server --open --host 127.0.0.1 --port 8080"
+  }
+```
+其中-- open是打包完成后自动打开浏览器页面, --host和--port分别是要打开的地址和端口
