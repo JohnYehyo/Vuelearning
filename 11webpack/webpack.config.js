@@ -22,5 +22,11 @@ module.exports = {
         //输出文件的名称
         filename: 'bundle.js'
     },
-    plugins: [htmlPlugin]
+    plugins: [htmlPlugin],
+    //所有第三方文件模块的匹配规则
+    module:{
+        rules: [
+            {test: /\.css$/, use: ['style-loader', 'css-loader']}
+        ]
+    }
 }

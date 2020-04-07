@@ -95,3 +95,41 @@ module.exports = {
   }
 ```
 其中-- open是打包完成后自动打开浏览器页面, --host和--port分别是要打开的地址和端口
+
+## 8. webpack中加载器的基本使用
+
+* ### 通过loader打包非js模块
+
+webpack默认只能处理以.js后缀名结尾的模块,所以需要处理其它类型的文件需要使用loader加载器
+
+- #### 打包处理css文件
+
+运行命令安装处理css的loader
+
+```
+npm install style-loader css-loader -D
+```
+
+在webpack.config.js的module中添加匹配规则
+
+```
+//所有第三方文件模块的匹配规则
+    module:{
+        rules: [
+            {test: /\.css$/, use: ['style-loader', 'css-loader']}
+        ]
+    }
+```
+
+
+
+- #### 打包处理less文件
+
+- #### 打包处理scss文件
+
+- #### 配置postCSS自动添加css的兼容
+
+- #### 打包样式表中的图片和字体文件
+
+- #### 打包处理js文件中的高级语法
+
