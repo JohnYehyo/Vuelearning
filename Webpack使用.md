@@ -61,3 +61,29 @@ npm run dev
 ```
 
 - ### 访问<http://localhost:8080/>查看
+
+## 6. 配置生成预览页面
+- ### 运行命令安装生成预览页面的插件
+```
+    npm install html-webpack-plugin -D
+```
+- ### 在webpack.config.js文件头部添加以下信息:
+```
+//导入生成预览页面的插件,得到一个构造函数
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+//创建插件的实例对象
+const htmlPlugin = new HtmlWebpackPlugin({
+    //指定要用的模板文件
+    template: './src/index.html',
+    //指定生成的文件名称(改文件也在内存中不显示)
+    filename: 'index.html'
+
+})
+```
+- ### 修改webpack.config.js向外暴露的配置对象,新增配置节点:
+```
+module.exports = {
+    plugins: [htmlPlugin]
+}
+```
