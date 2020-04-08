@@ -121,11 +121,43 @@ npm install style-loader css-loader -D
     }
 ```
 
-
-
 - #### 打包处理less文件
 
+运行命令安装处理less的loader
+
+```
+npm install less-loader less -D
+```
+
+在webpack.config.js的module中添加匹配规则
+
+```
+//所有第三方文件模块的匹配规则
+    module:{
+        rules: [
+            {test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader']}
+        ]
+    }
+```
+
 - #### 打包处理scss文件
+
+运行命令安装处理scss的loader
+
+```
+npm install sass-loader node-sass -D
+```
+
+在webpack.config.js的module中添加匹配规则
+
+```
+//所有第三方文件模块的匹配规则
+    module:{
+        rules: [
+            {test: /\.css$/, use: ['style-loader', 'css-loader', 'sass-loader']}
+        ]
+    }
+```
 
 - #### 配置postCSS自动添加css的兼容
 
