@@ -154,7 +154,7 @@ npm install sass-loader node-sass -D
 //所有第三方文件模块的匹配规则
     module:{
         rules: [
-            {test: /\.css$/, use: ['style-loader', 'css-loader', 'sass-loader']}
+            {test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']}
         ]
     }
 ```

@@ -11,6 +11,8 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 })
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
     //编译模式(development、production)
     mode: 'development',
@@ -22,12 +24,14 @@ module.exports = {
         //输出文件的名称
         filename: 'bundle.js'
     },
-    plugins: [htmlPlugin],
+    plugins: [htmlPlugin, new VueLoaderPlugin()],
     //所有第三方文件模块的匹配规则
     module:{
         rules: [
             {test: /\.css$/, use: ['style-loader', 'css-loader']},
-            {test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader']}
+            {test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader']},
+            {test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader']},
+            {test: /\.vue$/, use: ['vue-loader']}
         ]
     }
 }
